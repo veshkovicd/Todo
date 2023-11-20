@@ -1,37 +1,54 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import InputItem from './InputItem';
 
-const TodoList = () => {
-    const [inputTask, setInputTask] = useState('');
-    const [list, setList] = useState([]);
+const TodoList = ({
+    list,
+    inputTask,
+    handleInputChange,
+    handleOnEnterPressed,
+    handleSaveTodoItem,
+    handleDeleteAll,
+    handleDeleteTodoItem,
+    handleDeleteSelectedTodos,
+    selectedItemsArray,
+    setSelectedItemsArray
+}) => {
+    const [hoveredId, setHoveredId] = useState(null);
 
-    const handleInputChange = (event) => {
-        setInputTask(event.target.value);
+    const handleItemCheckboxChange = (id) => {
+        const updatedSelectedItems = selectedItemsArray.includes(id)
+            ? selectedItemsArray.filter(itemId => itemId !== id)
+            : [...selectedItemsArray, id];
+        setSelectedItemsArray(updatedSelectedItems);
     };
-    const handleSaveTodoItem = () => {
-        if (inputTask.trim() !== '') {
-            setList([...list, inputTask]);
-            setInputTask('');
-          }
-
-        };
 
     return (
         <div>
             <h1>Todo List</h1>
-            <div>
-                <input type="text" value={inputTask}
-                    onChange={handleInputChange} placeholder="Enter your todo item" />
-                <button onClick={handleSaveTodoItem} >Save</button>
-            </div>
+            <InputItem
+                value={inputTask}
+                onChange={handleInputChange}
+                onKeyDown={handleOnEnterPressed}
+                onClick={handleSaveTodoItem}
+            />
+            <button onClick={handleDeleteAll}>Delete all</button>
+            <button onClick={handleDeleteSelectedTodos}>Delete Selected</button>
             <ul>
-                {list.map((todo, index) => (
-                    <li key={index}>{todo}</li>
+                {list.map((todo) => (
+                    <li key={todo.id} onMouseEnter={() => setHoveredId(todo.id)} onMouseLeave={() => setHoveredId(null)}>
+                        <input
+                            type="checkbox"
+                            checked={selectedItemsArray.includes(todo.id)}
+                            onChange={() => handleItemCheckboxChange(todo.id)}
+                        />
+                        <span>{todo.value}</span>
+                        {hoveredId === todo.id && <button onClick={() => handleDeleteTodoItem(todo.id)}>X</button>}
+                    </li>
                 ))}
             </ul>
-
+            
         </div>
     );
-
 };
-export default TodoList; 
+
+export default TodoList;
