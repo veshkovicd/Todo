@@ -1,7 +1,7 @@
-import React from 'react';
 import { useState } from 'react';
 import TodoList from './TodoList.jsx';
 import { v4 as uuidv4 } from 'uuid';
+import InputItem from './InputItem.jsx';
 
 
 const Todo = () => {
@@ -48,19 +48,22 @@ const Todo = () => {
         setSelectedItemsArray([]);
     };
     return (
-
-        <TodoList
-            list={list}
-            inputTask={inputTask}
-            handleInputChange={handleInputChange}
-            handleSaveTodoItem={handleSaveTodoItem}
-            handleOnEnterPressed={handleOnEnterPressed}
-            handleDeleteAll={handleDeleteAll}
-            handleDeleteTodoItem={handleDeleteTodoItem}
-            selectedItemsArray={selectedItemsArray}
-            setSelectedItemsArray={setSelectedItemsArray}
-            handleDeleteSelectedTodos={handleDeleteSelectedTodos}
-        />
+        <>
+            <h1>Todo List</h1>
+            <InputItem value={inputTask}
+                onChange={handleInputChange}
+                onKeyDown={handleOnEnterPressed}
+                onClick={handleSaveTodoItem}
+            />
+            <button onClick={handleDeleteAll}>Delete all</button>
+            <button onClick={handleDeleteSelectedTodos}>Delete Selected</button>
+            <TodoList
+                list={list}
+                handleDeleteTodoItem={handleDeleteTodoItem}
+                selectedItemsArray={selectedItemsArray}
+                setSelectedItemsArray={setSelectedItemsArray}
+            />
+        </>
     );
 };
 
