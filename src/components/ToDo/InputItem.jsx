@@ -3,6 +3,7 @@ const InputItem = ({ value, onChange, onKeyDown, onClick }) => {
 
     return (
         <div>
+            <h4>Input items</h4>
             <input
                 type="text"
                 value={value}
@@ -10,7 +11,7 @@ const InputItem = ({ value, onChange, onKeyDown, onClick }) => {
                 onKeyDown={onKeyDown}
                 placeholder="Enter your todo item"
             />
-            <button onClick={onClick}>Save</button>
+            <button onClick={onClick}>Save Item</button>
         </div>
     );
 };
