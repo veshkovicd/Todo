@@ -8,7 +8,7 @@ import ListContext from '../ListContext.jsx';
 
 const Todo = () => {
 
-    const { lists, addToList } = useContext(ListContext);
+    const { addToList } = useContext(ListContext);
 
 
     const [inputTask, setInputTask] = useState('');
@@ -17,7 +17,6 @@ const Todo = () => {
     const [titles, setTitles] = useState([]);
     const [selectedItemsArray, setSelectedItemsArray] = useState([]);
 
-    console.log('context lists: ', lists)
     const handleInputChange = (event) => {
         setInputTask(event.target.value);
     };
